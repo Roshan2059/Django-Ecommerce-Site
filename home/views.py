@@ -12,9 +12,15 @@ class HomeView(BaseView):
 
     def get(self,request):
         self.my_view['sliders'] = Slider.objects.all()
-        self.my_view['ad'] = Ad.objects.all()
-        self.my_view['product'] = Product.objects.all()
+        self.my_view['ads'] = Ad.objects.all()
+        # self.my_view['product'] = Product.objects.all()
         self.my_view['hots'] = Product.objects.filter(labels='hot')
-        self.my_view['sale'] = Product.objects.filter(labels='sale')
-        self.my_view['new'] = Product.objects.filter(labels='new')
+        self.my_view['sales'] = Product.objects.filter(labels='sale')
+        self.my_view['news'] = Product.objects.filter(labels='new')
         return render(request,'index.html',self.my_view)
+
+class CategoryView(BaseView):
+    def get(self,request,slug):
+        ids = Category.onjects.get(slug = slug).id
+        self.my_view['catproducts'] = Product.objects.filter(category_id = ids)
+        return render(request, 'index.html',self.my_view)

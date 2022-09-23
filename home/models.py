@@ -4,7 +4,7 @@ from django.db import models
 STATUS = (('active','active'),('','default'))
 class Category(models.Model):
     name = models.CharField(max_length=400)
-    slug = models.CharField(max_length = 400)
+    slug = models.CharField(max_length = 400,unique = True)
     logo = models.CharField(blank=True , max_length=50)
 
     def __str__(self):
@@ -12,7 +12,7 @@ class Category(models.Model):
 
 class Subcategory(models.Model):
     name = models.CharField(max_length=300)
-    slug = models.CharField(max_length=400)
+    slug = models.CharField(max_length=400,unique=True)
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     #for deleting the subcategory auomatically if the category field is deleted
     def __str__(self):
@@ -54,6 +54,7 @@ LABEL = (('new','new'),('hot','hot'),('sale','sale'))
 
 class Product(models.Model):
     name = models.CharField(max_length=500)
+    slug = models.CharField(max_length=500,blank=True)
     price = models.IntegerField()
     dis_price = models.IntegerField()
     image = models.ImageField(upload_to='media')
