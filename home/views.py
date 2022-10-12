@@ -51,3 +51,21 @@ def signup(request):
             messages.error(request,'Password doesnot match')
             return redirect('/signup')
     return render(request, 'signup.html')
+
+
+def reviews(request,slug):
+    if request.method == 'POST':
+        review = request.POST['review']
+        star = request.POST['star']
+        slug = request.POST['slug']
+        username = request.user.username
+        email = request.user.email
+        data = Review.objects.create(
+            username = username,
+            email = email,
+            review = review,
+            star = star,
+            slug = slug
+        )
+        data.save()
+    return redirect(f'/details/{slug}')
