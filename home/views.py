@@ -69,3 +69,15 @@ def reviews(request,slug):
         )
         data.save()
     return redirect(f'/details/{slug}')
+
+class SearchView(BaseView):
+    def get(self,request):
+        self.my_view
+        query = request.GET.get['query']
+        if request.method == 'GET':
+            if query != "":
+                self.my_view['search_product'] = Product.objects.filter(description__icontains = query)
+            else:
+                return redirect('/')
+            return render(request, 'product-list.html', self.my_view)
+

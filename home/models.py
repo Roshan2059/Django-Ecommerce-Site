@@ -69,11 +69,40 @@ class Product(models.Model):
         return self.name
 
 class Review(models.Model):
-    name = models.CharField(max_length = 400)
-    email = models.EmailField(max_length = 50)
-    review = models.TextField(blank = True)
-    star = models.IntegerField(null = True)
-    slug = models.CharField(max_length = 500)
+    name = models.CharField(max_length=400)
+    email = models.EmailField(max_length=50)
+    review = models.TextField(blank=True)
+    star = models.IntegerField(null=True)
+    slug = models.CharField(max_length=500)
 
     def __str__(self):
         return self.name
+
+class Cart(models.Model):
+    username = models.CharField(max_length=50)
+    slug = models.CharField(max_length=300)
+    quantity = models.IntegerField(default=1)
+    total = models.IntegerField()
+    items = models.ForeignKey(Product,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.username
+
+class WishList(models.Model):
+    username = models.CharField(max_length=50)
+    slug = models.CharField(max_length=500)
+    items = models.ForeignKey(Product,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.username
+
+class Contact(models.Model):
+    name = models.CharField(max_length=50)
+    email = models.CharField(max_length=100)
+    subject = models.TextField()
+    message = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
